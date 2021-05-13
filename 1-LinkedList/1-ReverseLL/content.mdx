@@ -1,1 +1,109 @@
+# Reverse A Linked List
 
+In this series, we're going to solve some important problems of Linked List.
+
+## Problem Statement : 
+In this problem, we are going to learn about reversing a Linked List. 
+
+We have been given a  **head** of a singly linked list. Our task is to reverse the list and then return the final reversed list.
+Let us look at some of the examples - 
+
+**Example 1 :** 
+``` 
+Input - head = [1,2,3,4,5]
+Output - [5,4,3,2,1]
+ ```
+
+![enter image description here](https://github.com/anmolahuja03/asquare-dsa-sessions/blob/main/reversingLL.png)
+
+**Understanding the above diagram** 
+
+Let us suppose, we have been given five nodes as shown in the first image, after reversing the expected output would look like the second image in the above figure.
+
+**Example 2 :**
+```
+Input - head = [1,2]
+Output - [2,1]
+```
+**Example 3 :**
+```
+Input - head = []
+Output - []
+```
+
+## Possible Solutions :
+
+We are going to look at all the possible approaches to solve this problem one by one - 
+
+## Iterative Method
+It can be observed that we have to change the links between each node. We'll require three pointers i.e, (previous, current and next). Initially previous points to NULL, current points to head and next pointer points to current's next. We will then change the link of current's next and point it to previous. We will move these three pointers further by one step. Same procedure will follow again. At last, we'll make current's next point to previous. Here, the loop continues until current is equal to NULL.
+
+![enter image description here](https://media.geeksforgeeks.org/wp-content/cdn-uploads/RGIF2.gif)
+
+
+```clike
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        // creating three pointers
+        ListNode* prev=NULL;
+        ListNode* curr=head;
+        ListNode* next;
+        
+        // loop will run until current is equal to NULL
+        while(curr!=NULL){
+            // next pointer will store the value of current's next
+            next=curr->next;
+            // current's next will point to previous 
+            curr->next=prev;
+            // moving these pointers by one step
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+};
+```
+**Complexity Analysis -** 
+- Time Complexity -  O(n)
+- Space Complexity -  O(1)
+
+
+## Recursive Method
+
+We know that whenever we have to solve a problem using recursion, we try to break that problem in such a way that for one part we'll work and for the other part recursion has to work.
+So, in this case we'll work for the very first element and for the other elements recursion function will do the work. We can say that the list gets divided into two parts i.e, first node and rest of the elements.
+For example, in the case of `1->2->3->4->5->NULL`. Our head pointer will point to 1. We'll call recursive function for `head->next`. So our new linked list after reversal of other half list becomes `1->2<-3<-4<-5`, where our newhead of the other part will point to 5. Here, it can be observed that the other part of the linked list has been reversed. Now we want to connect 2 with 1 by pointing `head->next->next` to head and then make head's next point to NULL which would finally result in `4->3->2->1->NULL`.
+
+![enter image description here](https://github.com/anmolahuja03/asquare-dsa-sessions/blob/main/reverseLL2.png)
+
+**What should be the base case?**
+
+Have you thought that what could be the smallest linked list? It is the linked list which only has one node, right? So in this case reverse would be the same, as the head won't change.
+If the length of our linked list is 1 or 0, we'll return without doing anything.
+
+```clike
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        
+        // base case
+        if(head==NULL || head->next==NULL){
+            return head;
+        }
+        
+        // for reversing the other part of linked list
+        ListNode* newhead = reverseList(head->next);
+        // changing the next pointer of head's next 
+        // and pointing it to head
+        head->next->next = head;
+        // making head's next point to NULL
+        head->next = NULL;
+        
+        return newhead;
+    }
+};
+```
+**Complexity Analysis -**
+- Time Complexity - O(n)
+- Space Complexity - O(n)
