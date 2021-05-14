@@ -14,7 +14,7 @@ Input - head = [1,2,3,4,5]
 Output - [5,4,3,2,1]
  ```
 
-![enter image description here](https://github.com/anmolahuja03/asquare-dsa-sessions/blob/main/reversingLL.png)
+![enter image description here](https://github.com/anmolahuja03/asquare-dsa-sessions/blob/main/LinkedList-Images/reversingLL.png)
 
 **Understanding the above diagram** 
 
@@ -75,7 +75,7 @@ We know that whenever we have to solve a problem using recursion, we try to brea
 So, in this case we'll work for the very first element and for the other elements recursion function will do the work. We can say that the list gets divided into two parts i.e, first node and rest of the elements.
 For example, in the case of `1->2->3->4->5->NULL`. Our head pointer will point to 1. We'll call recursive function for `head->next`. So our new linked list after reversal of other half list becomes `1->2<-3<-4<-5`, where our newhead of the other part will point to 5. Here, it can be observed that the other part of the linked list has been reversed. Now we want to connect 2 with 1 by pointing `head->next->next` to head and then make head's next point to NULL which would finally result in `5->4->3->2->1->NULL`.
 
-![enter image description here](https://github.com/anmolahuja03/asquare-dsa-sessions/blob/main/reverseLL2.png)
+![enter image description here](https://github.com/anmolahuja03/asquare-dsa-sessions/blob/main/LinkedList-Images/reverseLL2.png)
 
 **What should be the base case?**
 
