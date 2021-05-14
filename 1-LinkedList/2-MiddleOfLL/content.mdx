@@ -1,0 +1,109 @@
+
+# Middle of the Linked List
+
+## Problem Statement :
+In this question, the problem states that given a non-empty, singly linked list with head node **head**, return a middle node of linked list.
+There is one extra constraint that says if there are two middle nodes, return the second middle node.
+Let us see some examples to understand it better -
+
+**Example 1 :**
+```
+Input - [1,2,3,4,5]
+Output - Node 3 from this list
+Here, the middle of the linked list is 3 so we'll return 3.
+```
+
+**Example 2 :**
+```
+Input - [1,2,3,4,5,6]
+Output - Node 4 from the list
+In this case, middle can be 3 as well as 4. But according to the given constraint it is said that, in case of two middle nodes we have to return the second middle node. So, the output will be 4.
+```
+## Possible Solutions :
+We are going to look at all the approaches of solving this problem.
+
+### Approach 1 - By counting the length of list
+
+At first, we're going to iterate and count the no of nodes. After finding length we'll do `length/2`. This will give us the position of the middle node, the node at this position can be returned.
+
+![enter image description here](https://github.com/anmolahuja03/asquare-dsa-sessions/blob/main/LinkedList-Images/MiddleNode.png)
+
+**Implementation -** 
+```clike
+class Solution {
+public:   
+    ListNode* middleNode(ListNode* head) {        
+        // creating a temp variable pointing to head
+        ListNode* temp = head;
+        int length=0;
+        // iterating till temp reaches end
+        while(temp!=NULL){
+            length++;
+            temp=temp->next;
+        }
+        // setting temp to head
+        temp=head;
+        int count=0;
+        // traversing till we reach middle node
+        while(count<length/2){
+            // moving to next node in 
+            // each iteration
+            temp=temp->next;
+            count++;
+        }
+        // returning temp which is 
+        // pointing to middle node
+        return temp;
+    }
+};
+```
+
+**Complexity Analysis -** 
+- Time Complexity - O(n)
+- Space Complexity - O(1)
+
+### Approach 2 - Using Fast and Slow Pointers
+In this approach, we can  traverse the linked list using two pointers named `slow` and `fast`. As their name suggests, slow pointer moves slowly and fast pointer moves fastly. In each iteration slow will move one node ahead and fast moves two nodes ahead. When the fast pointer reaches the end of the list (NULL), slow will point towards the middle node of the list. At the end, we can print node pointed by the slow pointer which will be our resultant middle node.
+
+![enter image description here](https://github.com/anmolahuja03/asquare-dsa-sessions/blob/main/LinkedList-Images/MiddleNode-2pointer.png)
+
+**Implementation -**
+
+```clike
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        if(head==NULL)
+            return head;
+        
+        // declaring pointers
+        ListNode* slow, *fast;
+        // making them point to head
+        slow=fast=head;
+        // traversing till fast reaches 
+        // the last node
+        while(fast!=NULL && fast->next!=NULL){
+            // moving slow one time
+            slow=slow->next;
+            // moving fast two times
+            fast=fast->next->next;
+        }
+        // slow points to the middle
+        return slow;    
+    }
+};
+```
+
+> Curious question - You might be wondering, what is the need of `fast->next!=NULL` condition? Isn't `fast!=NULL` enough to traverse fast till end? 
+
+The condition `fast!=NULL` makes sure that the fast pointer is not null. The reason for adding `fast->next!=NULL` is that as inside the loop we are incrementing the fast pointer by two positions so we need to check if the next node is present or not. When the fast pointer points to the last node of the list, fast's next to next will point to NULL's next. As NULL's next is an unallocated memory, the program will lead to segmentation fault if this condition is not used.
+
+**Complexity Analysis -**
+- Time Complexity - O(n)
+- Space Complexity - O(1)
+
+**Why is the second approach more efficient?**
+As the fast pointer moves by a distance of 2 units, it covers the length of the linked list in half of the time. So the complexity is reduced to O(n/2). Hence, this approach is more efficient.
+
+
+
